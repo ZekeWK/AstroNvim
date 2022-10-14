@@ -96,7 +96,7 @@ astronvim.lsp.on_attach = function(client, bufnr)
 
   if capabilities.codeActionProvider then
     lsp_mappings.n["<leader>la"] = { function() vim.lsp.buf.code_action() end, desc = "LSP code action" }
-    lsp_mappings.v["<leader>la"] = { function() vim.lsp.buf.range_code_action() end, desc = "Range LSP code action" }
+    lsp_mappings.v["<leader>la"] = lsp_mappings.n["<leader>la"]
   end
 
   if capabilities.declarationProvider then
@@ -112,27 +112,22 @@ astronvim.lsp.on_attach = function(client, bufnr)
       function() vim.lsp.buf.format(astronvim.lsp.format_opts) end,
       desc = "Format code",
     }
-    lsp_mappings.v["<leader>lf"] = {
-      function()
-        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, true, true), "n", false)
-        vim.lsp.buf.range_formatting(astronvim.lsp.format_opts)
-      end,
-      desc = "Range format code",
-    }
+    lsp_mappings.v["<leader>lf"] = lsp_mappings.n["<leader>lf"]
 
     vim.api.nvim_buf_create_user_command(
       bufnr,
       "Format",
-      function() vim.lsp.buf.format(astronvim.default_tbl({ async = true }, astronvim.lsp.format_opts)) end,
+      function() vim.lsp.buf.format(astronvim.lsp.format_opts) end,
       { desc = "Format file with LSP" }
     )
     if astronvim.lsp.formatting.format_on_save then
-      vim.api.nvim_create_augroup("auto_format", { clear = true })
+      local autocmd_group = "auto_format_" .. bufnr
+      vim.api.nvim_create_augroup(autocmd_group, { clear = true })
       vim.api.nvim_create_autocmd("BufWritePre", {
-        group = "auto_format",
-        desc = "Auto format before save",
-        pattern = "<buffer>",
-        callback = function() vim.lsp.buf.format(astronvim.lsp.format_opts) end,
+        group = autocmd_group,
+        buffer = bufnr,
+        desc = "Auto format buffer " .. bufnr .. " before save",
+        callback = function() vim.lsp.buf.format(astronvim.default_tbl({ bufnr = bufnr }, astronvim.lsp.format_opts)) end,
       })
     end
   end

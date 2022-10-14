@@ -12,18 +12,31 @@ local devicons_avail, devicons = pcall(require, "nvim-web-devicons")
 
 astronvim.status.env.modes = {
   ["n"] = { "NORMAL", "normal" },
-  ["no"] = { "N-PENDING", "normal" },
+  ["no"] = { "OP", "normal" },
+  ["nov"] = { "OP", "normal" },
+  ["noV"] = { "OP", "normal" },
+  ["no"] = { "OP", "normal" },
+  ["niI"] = { "NORMAL", "normal" },
+  ["niR"] = { "NORMAL", "normal" },
+  ["niV"] = { "NORMAL", "normal" },
   ["i"] = { "INSERT", "insert" },
   ["ic"] = { "INSERT", "insert" },
-  ["t"] = { "TERMINAL", "insert" },
+  ["ix"] = { "INSERT", "insert" },
+  ["t"] = { "TERM", "insert" },
+  ["nt"] = { "TERM", "insert" },
   ["v"] = { "VISUAL", "visual" },
-  ["V"] = { "V-LINE", "visual" },
-  [""] = { "V-BLOCK", "visual" },
+  ["vs"] = { "VISUAL", "visual" },
+  ["V"] = { "LINES", "visual" },
+  ["Vs"] = { "LINES", "visual" },
+  [""] = { "BLOCK", "visual" },
+  ["s"] = { "BLOCK", "visual" },
   ["R"] = { "REPLACE", "replace" },
+  ["Rc"] = { "REPLACE", "replace" },
+  ["Rx"] = { "REPLACE", "replace" },
   ["Rv"] = { "V-REPLACE", "replace" },
   ["s"] = { "SELECT", "visual" },
-  ["S"] = { "S-LINE", "visual" },
-  [""] = { "S-BLOCK", "visual" },
+  ["S"] = { "SELECT", "visual" },
+  [""] = { "BLOCK", "visual" },
   ["c"] = { "COMMAND", "command" },
   ["cv"] = { "COMMAND", "command" },
   ["ce"] = { "COMMAND", "command" },
@@ -31,6 +44,7 @@ astronvim.status.env.modes = {
   ["rm"] = { "MORE", "inactive" },
   ["r?"] = { "CONFIRM", "inactive" },
   ["!"] = { "SHELL", "inactive" },
+  ["null"] = { "null", "inactive" },
 }
 
 local function pattern_match(str, pattern_list)
@@ -162,8 +176,42 @@ end
 -- @usage local heirline_component = { provider = astronvim.status.provider.fill }
 function astronvim.status.provider.fill() return "%=" end
 
+--- A provider function for displaying if a macro is currently being recorded
+-- @param opts a prefix before the recording register and options passed to the stylize function
+-- @return a function that returns a string of the current recording status
+-- @usage local heirline_component = { provider = astronvim.status.provider.macro_recording() }
+-- @see astronvim.status.utils.stylize
+function astronvim.status.provider.macro_recording(opts)
+  opts = astronvim.default_tbl(opts, { prefix = "@" })
+  return function()
+    local register = vim.fn.reg_recording()
+    if register ~= "" then register = opts.prefix .. register end
+    return astronvim.status.utils.stylize(register, opts)
+  end
+end
+
+--- A provider function for showing the text of the current vim mode
+-- @param opts options for padding the text and options passed to the stylize function
+-- @return the function for displaying the text of the current vim mode
+-- @usage local heirline_component = { provider = astronvim.status.provider.mode_text() }
+-- @see astronvim.status.utils.stylize
 function astronvim.status.provider.mode_text(opts)
-  return function() return astronvim.status.utils.stylize(astronvim.status.env.modes[vim.fn.mode()][1], opts) end
+  local max_length =
+    math.max(unpack(vim.tbl_map(function(str) return #str[1] end, vim.tbl_values(astronvim.status.env.modes))))
+  return function()
+    local text = astronvim.status.env.modes[vim.fn.mode()][1]
+    if opts.pad_text then
+      local padding = max_length - #text
+      if opts.pad_text == "right" then
+        text = string.rep(" ", padding) .. text
+      elseif opts.pad_text == "left" then
+        text = text .. string.rep(" ", padding)
+      elseif opts.pad_text == "center" then
+        text = string.rep(" ", math.floor(padding / 2)) .. text .. string.rep(" ", math.ceil(padding / 2))
+      end
+    end
+    return astronvim.status.utils.stylize(text, opts)
+  end
 end
 
 --- A provider function for showing the percentage of the current location in a document
@@ -304,8 +352,10 @@ end
 -- @see astronvim.status.utils.stylize
 function astronvim.status.provider.file_modified(opts)
   return function(self)
-    local buffer = vim.bo[self and self.bufnr or 0]
-    return astronvim.status.utils.stylize(buffer.modified and astronvim.get_icon "FileModified" or "", opts)
+    return astronvim.status.utils.stylize(
+      astronvim.status.condition.file_modified((self or {}).bufnr) and astronvim.get_icon "FileModified" or "",
+      opts
+    )
   end
 end
 
@@ -316,9 +366,8 @@ end
 -- @see astronvim.status.utils.stylize
 function astronvim.status.provider.file_read_only(opts)
   return function(self)
-    local buffer = vim.bo[self and self.bufnr or 0]
     return astronvim.status.utils.stylize(
-      (not buffer.modifiable or buffer.readonly) and astronvim.get_icon "FileReadOnly" or "",
+      astronvim.status.condition.file_read_only((self or {}).bufnr) and astronvim.get_icon "FileReadOnly" or "",
       opts
     )
   end
@@ -475,6 +524,11 @@ function astronvim.status.condition.buffer_matches(patterns)
   return false
 end
 
+--- A condition function if a macro is being recorded
+-- @return boolean of wether or not a macro is currently being recorded
+-- @usage local heirline_component = { provider = "Example Provider", condition = astronvim.status.condition.is_macro_recording }
+function astronvim.status.condition.is_macro_recording() return vim.fn.reg_recording() ~= "" end
+
 --- A condition function if the current file is in a git repo
 -- @return boolean of wether or not the current file is in a git repo
 -- @usage local heirline_component = { provider = "Example Provider", condition = astronvim.status.condition.is_git_repo }
@@ -486,6 +540,19 @@ function astronvim.status.condition.is_git_repo() return vim.b.gitsigns_head or 
 function astronvim.status.condition.git_changed()
   local git_status = vim.b.gitsigns_status_dict
   return git_status and (git_status.added or 0) + (git_status.removed or 0) + (git_status.changed or 0) > 0
+end
+
+--- A condition function if the current buffer is modified
+-- @return boolean of wether or not the current buffer is modified
+-- @usage local heirline_component = { provider = "Example Provider", condition = astronvim.status.condition.file_modified }
+function astronvim.status.condition.file_modified(bufnr) return vim.bo[bufnr or 0].modified end
+
+--- A condition function if the current buffer is read only
+-- @return boolean of wether or not the current buffer is read only or not modifiable
+-- @usage local heirline_component = { provider = "Example Provider", condition = astronvim.status.condition.file_read_only }
+function astronvim.status.condition.file_read_only(bufnr)
+  local buffer = vim.bo[bufnr or 0]
+  return not buffer.modifiable or buffer.readonly
 end
 
 --- A condition function if the current file has any diagnostics
@@ -593,6 +660,25 @@ function astronvim.status.component.nav(opts)
   for i, key in ipairs { "ruler", "percentage", "scrollbar" } do
     opts[i] = opts[key] and { provider = key, opts = opts[key], hl = opts[key].hl } or false
   end
+  return astronvim.status.component.builder(opts)
+end
+
+--- A function to build a set of children components for a macro recording section
+-- @param opts options for configuring macro recording and the overall padding
+-- @return The Heirline component table
+-- @usage local heirline_component = astronvim.status.component.macro_recording()
+function astronvim.status.component.macro_recording(opts)
+  opts = astronvim.default_tbl(opts, {
+    macro_recording = { icon = { kind = "MacroRecording", padding = { right = 1 } } },
+    surround = {
+      separator = "center",
+      color = "macro_recording_bg",
+      condition = astronvim.status.condition.is_macro_recording,
+    },
+    hl = { fg = "macro_recording_fg", bold = true },
+    update = { "RecordingEnter", "RecordingLeave" },
+  })
+  opts[1] = opts.macro_recording and { provider = "macro_recording", opts = opts.macro_recording } or false
   return astronvim.status.component.builder(opts)
 end
 

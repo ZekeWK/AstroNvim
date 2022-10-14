@@ -8,9 +8,6 @@ local astro_plugins = {
   -- Lua functions
   ["nvim-lua/plenary.nvim"] = { module = "plenary" },
 
-  -- Popup API
-  ["nvim-lua/popup.nvim"] = {},
-
   -- Indent detection
   ["Darazaki/indent-o-matic"] = {
     event = "BufEnter",
@@ -38,7 +35,7 @@ local astro_plugins = {
   -- Icons
   ["kyazdani42/nvim-web-devicons"] = {
     module = "nvim-web-devicons",
-    config = function() require "configs.icons" end,
+    config = function() require "configs.nvim-web-devicons" end,
   },
 
   -- LSP Icons
@@ -141,17 +138,17 @@ local astro_plugins = {
     config = function() astronvim.add_user_cmp_source "nvim_lsp" end,
   },
 
-  -- Package Manager
-  ["williamboman/mason.nvim"] = { config = function() require "configs.mason" end },
-
   -- Built-in LSP
   ["neovim/nvim-lspconfig"] = { config = function() require "configs.lspconfig" end },
 
-  -- LSP manager
-  ["jayp0521/mason-null-ls.nvim"] = {
-    after = { "mason.nvim", "null-ls.nvim" },
-    config = function() require "configs.mason-null-ls" end,
+  -- Formatting and linting
+  ["jose-elias-alvarez/null-ls.nvim"] = {
+    event = "BufEnter",
+    config = function() require "configs.null-ls" end,
   },
+
+  -- Package Manager
+  ["williamboman/mason.nvim"] = { config = function() require "configs.mason" end },
 
   -- LSP manager
   ["williamboman/mason-lspconfig.nvim"] = {
@@ -159,17 +156,17 @@ local astro_plugins = {
     config = function() require "configs.mason-lspconfig" end,
   },
 
+  -- null-ls manager
+  ["jayp0521/mason-null-ls.nvim"] = {
+    after = { "mason.nvim", "null-ls.nvim" },
+    config = function() require "configs.mason-null-ls" end,
+  },
+
   -- LSP symbols
   ["stevearc/aerial.nvim"] = {
     module = "aerial",
     cmd = { "AerialToggle", "AerialOpen", "AerialInfo" },
     config = function() require "configs.aerial" end,
-  },
-
-  -- Formatting and linting
-  ["jose-elias-alvarez/null-ls.nvim"] = {
-    event = "BufEnter",
-    config = function() require "configs.null-ls" end,
   },
 
   -- Fuzzy finder
