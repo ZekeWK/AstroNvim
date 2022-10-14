@@ -175,6 +175,14 @@ local config = {
 
   -- Extend LSP configuration
   lsp = {
+    formatting = {
+      format_on_save = false, -- enable or disable automatic formatting on save
+      timeout_ms = 3200, -- adjust the timeout_ms variable for formatting
+      filter = function(client)
+        -- enable all other clients
+        return true
+      end,
+    },
     -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"

@@ -234,13 +234,13 @@
 	"exempel": {
 		"prefix": ["exe", "exempel"],
 		"body": [
-			"\\\\begin{exemple}[$1]", "\t$2", "\\end{exemple}", "$0"
+			"\\\\begin{exempel}[$1]", "\t$2", "\\end{exempel}", "$0"
 		]
 	},
 	"example": {
 		"prefix": ["exa", "example"],
 		"body": [
-			"\\\\begin{example}[$1]", "\t$2", "\\end{exempel}", "$0"
+			"\\\\begin{example}[$1]", "\t$2", "\\end{example}", "$0"
 		]
 	},
 	"lemma": {
