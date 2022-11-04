@@ -41,6 +41,7 @@ local config = {
     g = {
       mapleader = " ", -- sets vim.g.mapleader
       vimtex_view_general_viewer = "xournalpp",
+      tex_flavor = "latex",
     },
   },
 

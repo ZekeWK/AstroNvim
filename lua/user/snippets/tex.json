@@ -465,6 +465,320 @@
 			"\\item $0"
 		]
 	},
+	"vector": {
+		"prefix": ["v", "vec"],
+		"body": [
+			"\\vec{$1} $0"
+		]
+	},
+	"vector 2d": {
+		"prefix": ["v2", "vec2"],
+		"body": [
+			"\\begin{pmatrix}",
+			"$1 \\\\\\",
+			"$2 \\\\\\",
+			"\\end{pmatrix}",
+			"$0"
+		]
+	},
+	"vector 3d": {
+		"prefix": ["v3", "vec3"],
+		"body": [
+			"\\begin{pmatrix}",
+			"$1 \\\\\\",
+			"$2 \\\\\\",
+			"$3 \\\\\\",
+			"\\end{pmatrix}",
+			"$0"
+		]
+	},
+	"vdots": {
+		"prefix": "vdots",
+		"body": [
+			"\\vdots $0"
+		]
+	},
+	"len": {
+		"prefix": "len",
+		"body": [
+			"||$1|| $0"
+		]
+	},
+	"cap": {
+		"prefix": ["cap", "nn"],
+		"body": [
+			"\\cap $0"
+		]
+	},
+	"cup": {
+		"prefix": ["cup", "uu"],
+		"body": [
+			"\\cup $0"
+		]
+	},
+	"emptyset": {
+		"prefix": ["00", "emptyset"],
+		"body": [
+			"\\emptyset $0"
+		]
+	},
+	"cross product": {
+		"prefix": ["times","xx"],
+		"body": [
+			"\\times $0"
+		]
+	},
+	"vec": {
+		"prefix": "vv",
+		"body": [
+			"\\begin{pmatrix} $1 \\end{pmatrix}$0"
+		]
+	},
+	"matrix 2x2": {
+		"prefix": "m2",
+		"body": [
+    "\\begin{pmatrix}[cc]",
+    "${1:0} & ${2:0} \\\\\\",
+    "${3:0} & ${4:0} \\\\\\",
+    "\\end{pmatrix}",
+    "$0"
+		]
+	},
+	"matrix 3x2": {
+		"prefix": "m32",
+		"body": [
+    "\\begin{pmatrix}[cc]",
+    "${1:0} & ${2:0} \\\\\\",
+    "${3:0} & ${4:0} \\\\\\",
+    "${5:0} & ${6:0} \\\\\\",
+    "\\end{pmatrix}",
+    "$0"
+		]
+	},
+	"matrix 2x3": {
+		"prefix": "m23",
+		"body": [
+    "\\begin{pmatrix}[ccc]",
+    "${1:0} & ${2:0} & ${3:0} \\\\\\",
+    "${4:0} & ${5:0} & ${6:0} \\\\\\",
+    "\\end{pmatrix}",
+    "$0"
+		]
+	},
+	"matrix 3x3": {
+		"prefix": "m3",
+		"body": [
+    "\\begin{pmatrix}[ccc]",
+    "${1:0} & ${2:0} & ${3:0} \\\\\\",
+    "${4:0} & ${5:0} & ${6:0} \\\\\\",
+    "${7:0} & ${8:0} & ${9:0} \\\\\\",
+    "\\end{pmatrix}",
+    "$0"
+		]
+	},
+	"matrix 3x4": {
+		"prefix": "m34",
+		"body": [
+    "\\begin{pmatrix}[cccc]",
+    "${1:0} & ${2:0} & ${3:0} & ${4:0} \\\\\\",
+    "${5:0} & ${6:0} & ${7:0} & ${8:0} \\\\\\",
+    "${9:0} & ${10:0} & ${11:0} & ${12:0} \\\\\\",
+    "\\end{pmatrix}",
+    "$0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
+	"mathrm": {
+		"prefix": "rm",
+		"body": [
+			"\\mathrm{$1} $0"
+		]
+	},
 	"mathrm": {
 		"prefix": "rm",
 		"body": [
