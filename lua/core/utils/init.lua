@@ -106,10 +106,8 @@ end
 function astronvim.get_hlgroup(name, fallback)
   if vim.fn.hlexists(name) == 1 then
     local hl = vim.api.nvim_get_hl_by_name(name, vim.o.termguicolors)
-    local fallback_hl = vim.api.nvim_get_hl_by_name("Normal", vim.o.termguicolors)
-    for _, prop in ipairs { "foreground", "background" } do
-      if not hl[prop] then hl[prop] = fallback_hl[prop] end
-    end
+    if not hl["foreground"] then hl["foreground"] = "NONE" end
+    if not hl["background"] then hl["background"] = "NONE" end
     hl.fg, hl.bg, hl.sp = hl.foreground, hl.background, hl.special
     hl.ctermfg, hl.ctermbg = hl.foreground, hl.background
     return hl
