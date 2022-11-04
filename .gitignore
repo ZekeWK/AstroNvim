@@ -1,6 +1,10 @@
-colors/*
 !colors/default_theme.lua
-plugin
+colors/*
 docs
+<<<<<<< HEAD
 lua/packer_compiled.lua
 ginit.vim
+lua/packer_compiled.lua
+lua/user
+plugin
+spell
