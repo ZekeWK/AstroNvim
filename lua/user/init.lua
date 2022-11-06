@@ -94,6 +94,33 @@ local config = {
 
   -- Configure plugins
   plugins = {
+    cmp = function(opts)
+      local cmp = require "cmp"
+      local luasnip = require "luasnip"
+
+      opts.mapping["<Tab>"] = function(fallback)
+        if cmp.visible() then
+          cmp.confirm { select = true }
+        else
+          fallback()
+        end
+      end
+      opts.mapping["<S-Tab>"] = function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        else
+          fallback()
+        end
+      end
+      opts.mapping["½"] = function()
+        if luasnip.jumpable() then luasnip.jump(-1) end
+      end
+      opts.mapping["§"] = function()
+        if luasnip.jumpable() then luasnip.jump(1) end
+      end
+      return opts
+    end,
+
     -- Add plugins, the packer syntax without the "use"
     init = {
       -- You can disable default plugins as follows:
@@ -108,6 +135,7 @@ local config = {
       --     require("lsp_signature").setup()
       --   end,
       -- },
+
       {
         "lervag/vimtex",
       },
@@ -244,6 +272,9 @@ local config = {
       -- quick save
       -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
     },
+    v = {
+      ["§"] = { "<esc>a" },
+    },
     t = {
       -- setting a mapping to false will disable it
       -- ["<esc>"] = false,
@@ -272,6 +303,7 @@ local config = {
     -- Set key binding
     -- Set autocommands
 
+    require("luasnip").config.setup { store_selection_keys = "<Tab>" }
     vim.opt.autochdir = true
     vim.api.nvim_create_augroup("packer_conf", { clear = true })
     vim.api.nvim_create_autocmd("BufWritePost", {

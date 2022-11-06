@@ -49,14 +49,8 @@
 			"\\overset{$1}{${2:${TM_SELECTED_TEXT}}} $0"
 		]
 	},
-	"thm": {
-		"prefix": "thm",
-		"body": [
-			"\\begin{thm} $1 \\end{thm} $0"
-		]
-	},
 	"itemize": {
-		"prefix": "itemize",
+		"prefix": "item",
 		"body": [
 			"\\begin{itemize}",
 			"\t\\item $1",
@@ -71,6 +65,12 @@
 			"\t\\item $1",
 			"\\end{enumerate}",
 			"$0"
+		]
+	},
+	"item": {
+		"prefix": "-",
+		"body": [
+			"\\item $0"
 		]
 	},
 	"Environment": {
@@ -129,12 +129,6 @@
 			"\\int_{${1:0}}^{${2:\\infty}} $0"
 		]
 	},
-	"Sum Full": {
-		"prefix": "sumi",
-		"body": [
-			"\\sum_{${1:i}=${2:0}}^{${3:\\infty}} $0"
-		]
-	},
 	"undersetinline": {
 		"prefix": "_",
 		"body": [
@@ -142,7 +136,7 @@
 		]
 	},
 	"parenthesis1": {
-		"prefix": "(",
+		"prefix": "()",
 		"body": [
 			"\\left($1\\right"
 		]
@@ -156,7 +150,7 @@
 	"parenthesis3": {
 		"prefix": "{",
 		"body": [
-			"\\left{$1\\right"
+			"\\left\\{$1\\right\\"
 		]
 	},
 	"average": {
@@ -168,13 +162,7 @@
 	"Sum": {
 		"prefix": "sum",
 		"body": [
-			"\\sum_{${1:i=0}}^{${2:\\infty}} $0"
-		]
-	},
-	"hbar": {
-		"prefix": "hb",
-		"body": [
-			"\\hbar"
+			"\\sum_{${1:k=1}}^{${2:\\infty}} $0"
 		]
 	},
 	"operatorname": {
@@ -196,31 +184,31 @@
 		]
 	},
 	"implies": {
-		"prefix": ["implies", "impl"],
+		"prefix": ["implies"],
 		"body": [
 			"\\\\Rightarrow $0"
 		]
 	},
 	"equivalent": {
-		"prefix": ["equi", "equivalent"],
+		"prefix": ["equivalent"],
 		"body": [
 			"\\\\Leftrightarrow $0"
 		]
 	},
 	"arrow": {
-		"prefix": ["arr","arrow"],
+		"prefix": ["arrow"],
 		"body": [
 			"\\\\rightarrow $0"
 		]
 	},
 	"definition": {
-		"prefix": ["def", "definition"],
+		"prefix": ["definition"],
 		"body": [
 			"\\\\begin{definition}[$1]", "\t$2", "\\end{definition}", "$0"
 		]
 	},
 	"theorem": {
-		"prefix": ["the", "theorem"],
+		"prefix": ["theorem"],
 		"body": [
 			"\\\\begin{theorem}[$1]", "\t$2", "\\end{theorem}", "$0"
 		]
@@ -232,43 +220,43 @@
 		]
 	},
 	"exempel": {
-		"prefix": ["exe", "exempel"],
+		"prefix": ["exempel"],
 		"body": [
 			"\\\\begin{exempel}[$1]", "\t$2", "\\end{exempel}", "$0"
 		]
 	},
 	"example": {
-		"prefix": ["exa", "example"],
+		"prefix": ["example"],
 		"body": [
 			"\\\\begin{example}[$1]", "\t$2", "\\end{example}", "$0"
 		]
 	},
 	"lemma": {
-		"prefix": ["lem", "lemma"],
+		"prefix": ["lemma"],
 		"body": [
 			"\\\\begin{lemma}[$1]", "\t$2", "\\end{lemma}", "$0"
 		]
 	},
 	"corollary": {
-		"prefix": ["cor", "corollary"],
+		"prefix": ["corollary"],
 		"body": [
 			"\\\\begin{corollary}[$1]", "\t$2", "\\end{corollary}", "$0"
 		]
 	},
 	"korollarium": {
-		"prefix": ["kor", "korollarium"],
+		"prefix": ["korollarium"],
 		"body": [
 			"\\\\begin{korollarium}[$1]", "\t$2", "\\end{korollarium}", "$0"
 		]
 	},
 	"proof": {
-		"prefix": ["pro", "proof"],
+		"prefix": ["proof"],
 		"body": [
 			"\\\\begin{proof}[$1]", "\t$2", "\\end{proof}", "$0"
 		]
 	},
 	"bevis": {
-		"prefix": ["bev", "bevis"],
+		"prefix": ["bevis"],
 		"body": [
 			"\\\\begin{bevis}[$1]", "\t$2", "\\end{bevis}", "$0"
 		]
@@ -285,38 +273,32 @@
 			"if and only if $0"
 		]
 	},
-	"pi": {
-		"prefix": "pi",
-		"body": [
-			"\\pi $0"
-		]
-	},
 	"real": {
-		"prefix": ["RR", "real"],
+		"prefix": ["RR"],
 		"body": [
 			"\\mathbb{R} $0"
 		]
 	},
 	"integer": {
-		"prefix": ["ZZ", "integer"],
+		"prefix": ["ZZ"],
 		"body": [
 			"\\mathbb{Z} $0"
 		]
 	},
 	"naturalnumbers": {
-		"prefix": ["NN", "nat", "natural"],
+		"prefix": ["NN"],
 		"body": [
 			"\\mathbb{N} $0"
 		]
 	},
 	"rational": {
-		"prefix": ["QQ", "rat", "rational"],
+		"prefix": ["QQ"],
 		"body": [
 			"\\mathbb{Q} $0"
 		]
 	},
 	"complex": {
-		"prefix": ["CC" ,"com", "complex"],
+		"prefix": ["CC"],
 		"body": [
 			"\\mathbb{C} $0"
 		]
@@ -333,20 +315,14 @@
 			"\\infty $0"
 		]
 	},
-	"tab": {
-		"prefix": "t",
-		"body": [
-			"$TM_SELECTED_TEXT\t$0"
-		]
-	},
 	"forall": {
-		"prefix": ["AA", "forall"],
+		"prefix": ["AA"],
 		"body": [
 			"\\forall $0"
 		]
 	},
 	"exists": {
-		"prefix": ["EE", "exists"],
+		"prefix": ["EE"],
 		"body": [
 			"\\exists $0"
 		]
@@ -375,12 +351,6 @@
 			"\\ne $0"
 		]
 	},
-	"text": {
-		"prefix": "text",
-		"body": [
-			"\\text{$1} $0"
-		]
-	},
 	"lim": {
 		"prefix": "lim",
 		"body": [
@@ -391,6 +361,24 @@
 		"prefix": "sqrt",
 		"body": [
 			"\\sqrt{$1} $0"
+		]
+	},
+	"sin": {
+		"prefix": "sin",
+		"body": [
+			"\\sin($1) $0"
+		]
+	},
+	"cos": {
+		"prefix": "cos",
+		"body": [
+			"\\cos($1) $0"
+		]
+	},
+	"ln": {
+		"prefix": "ln",
+		"body": [
+			"\\ln($1) $0"
 		]
 	},
 	"root": {
@@ -406,7 +394,7 @@
 		]
 	},
 	"newpage": {
-		"prefix": ["np", "newpage"],
+		"prefix": ["newpage"],
 		"body": [
 			"\\newpage $0"
 		]
@@ -414,7 +402,7 @@
 	"derivative": {
 		"prefix": "derivative",
 		"body": [
-      "\\lim_{h \\rightarrow 0} \\frac{$1(x + h) - $1(x)}{h} $0"
+      "\\lim_{${1:h} \\rightarrow 0} \\frac{${2:f}(x + h) - ${2:f}(x)}{h} $0"
 		]
 	},
 	"subset": {
@@ -426,19 +414,13 @@
 	"binom": {
 		"prefix": "binom",
 		"body": [
-			"\\binom{$1}{$2} $0"
+			"\\binom{${1:n}}{${2:k} $0"
 		]
 	},
 	"cases": {
 		"prefix": "cases",
 		"body": [
 			"\\begin{cases} $1 \\end{cases} $0"
-		]
-	},
-	"subscript": {
-		"prefix": "__",
-		"body": [
-			"_{$1} $0"
 		]
 	},
 	"not": {
@@ -459,20 +441,14 @@
 			"\\setminus $0"
 		]
 	},
-	"item": {
-		"prefix": "-",
-		"body": [
-			"\\item $0"
-		]
-	},
 	"vector": {
-		"prefix": ["v", "vec"],
+		"prefix": ["v"],
 		"body": [
 			"\\vec{$1} $0"
 		]
 	},
 	"vector 2d": {
-		"prefix": ["v2", "vec2"],
+		"prefix": ["v2"],
 		"body": [
 			"\\begin{pmatrix}",
 			"$1 \\\\\\",
@@ -482,7 +458,7 @@
 		]
 	},
 	"vector 3d": {
-		"prefix": ["v3", "vec3"],
+		"prefix": ["v3"],
 		"body": [
 			"\\begin{pmatrix}",
 			"$1 \\\\\\",
@@ -505,25 +481,25 @@
 		]
 	},
 	"cap": {
-		"prefix": ["cap", "nn"],
+		"prefix": ["nn"],
 		"body": [
 			"\\cap $0"
 		]
 	},
 	"cup": {
-		"prefix": ["cup", "uu"],
+		"prefix": ["uu"],
 		"body": [
 			"\\cup $0"
 		]
 	},
 	"emptyset": {
-		"prefix": ["00", "emptyset"],
+		"prefix": ["0"],
 		"body": [
 			"\\emptyset $0"
 		]
 	},
 	"cross product": {
-		"prefix": ["times","xx"],
+		"prefix": ["xx"],
 		"body": [
 			"\\times $0"
 		]
@@ -587,40 +563,40 @@
     "$0"
 		]
 	},
-	"mathrm": {
-		"prefix": "rm",
+	"tex": {
+		"prefix": "tex",
 		"body": [
-			"\\mathrm{$1} $0"
+			"till exempel $0"
 		]
 	},
-	"mathrm": {
-		"prefix": "rm",
+	"dvs": {
+		"prefix": "dvs",
 		"body": [
-			"\\mathrm{$1} $0"
+		  "det vill säga $0"
 		]
 	},
-	"mathrm": {
-		"prefix": "rm",
+	"pi": {
+		"prefix": "pi",
 		"body": [
-			"\\mathrm{$1} $0"
+			"\\pi $0"
 		]
 	},
-	"mathrm": {
-		"prefix": "rm",
+	"lambda": {
+		"prefix": "lambda",
 		"body": [
-			"\\mathrm{$1} $0"
+			"\\lambda $0"
 		]
 	},
-	"mathrm": {
-		"prefix": "rm",
+	"Omega": {
+		"prefix": "Omega",
 		"body": [
-			"\\mathrm{$1} $0"
+			"\\Omega $0"
 		]
 	},
-	"mathrm": {
-		"prefix": "rm",
+	"omega": {
+		"prefix": "omega",
 		"body": [
-			"\\mathrm{$1} $0"
+			"\\omega $0"
 		]
 	},
 	"mathrm": {
