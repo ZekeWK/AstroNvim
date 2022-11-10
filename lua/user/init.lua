@@ -40,7 +40,7 @@ local config = {
     },
     g = {
       mapleader = " ", -- sets vim.g.mapleader
-      vimtex_view_general_viewer = "xournalpp",
+      -- vimtex_view_general_viewer = "xournalpp",
       tex_flavor = "latex",
     },
   },
@@ -205,12 +205,23 @@ local config = {
   -- Extend LSP configuration
   lsp = {
     formatting = {
-      format_on_save = false, -- enable or disable automatic formatting on save
-      timeout_ms = 3200, -- adjust the timeout_ms variable for formatting
-      filter = function(client)
-        -- enable all other clients
-        return true
-      end,
+      -- control auto formatting on save
+      format_on_save = {
+        enabled = false, -- enable or disable format on save globally
+        allow_filetypes = { -- enable format on save for specified filetypes only
+          -- "go",
+        },
+        ignore_filetypes = { -- disable format on save for specified filetypes
+          -- "python",
+        },
+      },
+      disabled = { -- disable formatting capabilities for the listed language servers
+        -- "sumneko_lua",
+      },
+      timeout_ms = 1000, -- default format timeout
+      -- filter = function(client) -- fully override the default formatting function
+      --   return true
+      -- end
     },
     -- enable servers that you already have installed without mason
     servers = {

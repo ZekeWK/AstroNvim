@@ -7,7 +7,7 @@ npairs.setup(astronvim.user_plugin_opts("plugins.nvim-autopairs", {
     javascript = { "string", "template_string" },
     java = false,
   },
-  disable_filetype = { "spectre_panel" },
+  disable_filetype = { "spectre_panel", "tex" }, -- Tex was added by me
   fast_wrap = {
     map = "<M-e>",
     chars = { "{", "[", "(", '"', "'" },
