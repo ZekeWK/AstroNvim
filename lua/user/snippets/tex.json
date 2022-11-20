@@ -174,7 +174,7 @@
 	"parenthesis6": {
 		"prefix": "{{",
 		"body": [
-			"\\left\\{${1:${TM_SELECTED_TEXT}}\\right\\}"
+			"\\left\\{${1:${TM_SELECTED_TEXT}}\\right\\\\}"
 		]
 	},
 	"average": {
@@ -192,7 +192,7 @@
 	"operatorname": {
 		"prefix": "op",
 		"body": [
-			"\\operatorname{$1} $0"
+			"\\operatorname{{${1:${TM_SELECTED_TEXT}}} $0"
 		]
 	},
 	"inlinemath": {
@@ -519,7 +519,7 @@
 	"len": {
 		"prefix": "len",
 		"body": [
-			"||$1|| $0"
+			"||${1:${TM_SELECTED_TEXT}}|| $0"
 		]
 	},
 	"cap": {
@@ -665,22 +665,50 @@
 			"\\delta $0"
 		]
 	},
+	"mu": {
+		"prefix": "mu",
+		"body": [
+			"\\mu $0"
+		]
+	},
+	"sigma": {
+		"prefix": "sigma",
+		"body": [
+			"\\sigma $0"
+		]
+	},
 	"iterator": {
 		"prefix": "iter",
 		"body": [
-		  "${1:x}_1${2:,} ${1:x}_2${2:,} \\dots ${2:,} ${1:x}_${2:n} $0"
+		  "${1:x}_1${2:,} ${1:x}_2${2:,} \\dots ${2:,} ${1:x}_${3:n} $0"
 		]
 	},
 	"section": {
 		"prefix": "section",
 		"body": [
-			"\\section{$1} $0"
+			"\\section{$1}",
+			"$0"
+		]
+	},
+	"subsection": {
+		"prefix": "subsection",
+		"body": [
+			"\\subsection{$1}",
+			"$0"
 		]
 	},
 	"header": {
 		"prefix": "header",
 		"body": [
-			"\\section*{$1} $0"
+			"\\section*{$1}",
+			"$0"
+		]
+	},
+	"subheader": {
+		"prefix": "subheader",
+		"body": [
+			"\\subsection*{$1}",
+			"$0"
 		]
 	},
 	"theta": {
@@ -713,16 +741,16 @@
 			"\\circ $0"
 		]
 	},
-	"mathrm": {
-		"prefix": "rm",
+	"sim": {
+		"prefix": "sim",
 		"body": [
-			"\\mathrm{$1} $0"
+			"\\sim $0"
 		]
 	},
-	"mathrm": {
-		"prefix": "rm",
+	"determinant": {
+		"prefix": "det",
 		"body": [
-			"\\mathrm{$1} $0"
+			"\\det $0"
 		]
 	},
 	"mathrm": {
