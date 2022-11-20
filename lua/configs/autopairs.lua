@@ -1,5 +1,4 @@
-local status_ok, npairs = pcall(require, "nvim-autopairs")
-if not status_ok then return end
+local npairs = require "nvim-autopairs"
 npairs.setup(astronvim.user_plugin_opts("plugins.nvim-autopairs", {
   check_ts = true,
   ts_config = {
@@ -8,6 +7,7 @@ npairs.setup(astronvim.user_plugin_opts("plugins.nvim-autopairs", {
     java = false,
   },
   disable_filetype = { "spectre_panel", "tex" }, -- Tex was added by me
+  ts_config = { java = false },
   fast_wrap = {
     map = "<M-e>",
     chars = { "{", "[", "(", '"', "'" },
