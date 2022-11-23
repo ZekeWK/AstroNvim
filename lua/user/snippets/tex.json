@@ -192,7 +192,7 @@
 	"operatorname": {
 		"prefix": "op",
 		"body": [
-			"\\operatorname{{${1:${TM_SELECTED_TEXT}}} $0"
+			"\\operatorname{${1:${TM_SELECTED_TEXT}}} $0"
 		]
 	},
 	"inlinemath": {
