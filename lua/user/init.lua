@@ -42,7 +42,6 @@ local config = {
       mapleader = " ", -- sets vim.g.mapleader
       -- vimtex_view_general_viewer = "xournalpp",
       tex_flavor = "latex",
-      clipboard = "unnamed",
     },
   },
 
@@ -164,13 +163,13 @@ local config = {
       -- set up null-ls's on_attach function
       config.on_attach = function(client)
         -- NOTE: You can remove this on attach function to disable format on save
-        if client.resolved_capabilities.document_formatting then
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            desc = "Auto format before save",
-            pattern = "<buffer>",
-            callback = vim.lsp.buf.formatting_sync,
-          })
-        end
+        -- if client.resolved_capabilities.document_formatting then
+        --   vim.api.nvim_create_autocmd("BufWritePre", {
+        --     desc = "Auto format before save",
+        --     pattern = "<buffer>",
+        --     callback = vim.lsp.buf.formatting_sync,
+        --   })
+        -- end
       end
       return config -- return final config table
     end,
@@ -283,6 +282,9 @@ local config = {
       ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
       -- quick save
       -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
+    },
+    i = {
+      ["¨"] = { "^" },
     },
     v = {
       ["§"] = { "<esc>a" },
