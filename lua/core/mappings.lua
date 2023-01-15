@@ -1,8 +1,6 @@
 local is_available = astronvim.is_available
 
-local maps = { i = {}, n = {}, v = {}, t = {}, [""] = {} }
-
-maps[""]["<Space>"] = "<Nop>"
+local maps = { i = {}, n = {}, v = {}, t = {} }
 
 -- Normal --
 -- Standard Operations
@@ -14,6 +12,8 @@ maps.n["gx"] = { function() astronvim.system_open() end, desc = "Open the file u
 maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
 maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
 maps.n["Q"] = "<Nop>"
+maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
+maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
 
 -- Packer
 maps.n["<leader>pc"] = { "<cmd>PackerCompile<cr>", desc = "Packer Compile" }
@@ -33,25 +33,73 @@ if is_available "alpha-nvim" then
   maps.n["<leader>d"] = { function() require("alpha").start() end, desc = "Alpha Dashboard" }
 end
 
--- Bufdelete
-if is_available "bufdelete.nvim" then
-  maps.n["<leader>c"] = { function() require("bufdelete").bufdelete(0, false) end, desc = "Close buffer" }
-  maps.n["<leader>C"] = { function() require("bufdelete").bufdelete(0, true) end, desc = "Force close buffer" }
-else
-  maps.n["<leader>c"] = { "<cmd>bdelete<cr>", desc = "Close buffer" }
-  maps.n["<leader>C"] = { "<cmd>bdelete!<cr>", desc = "Force close buffer" }
+if vim.g.heirline_bufferline then
+  -- Manage Buffers
+  maps.n["<leader>c"] = { function() astronvim.close_buf(0) end, desc = "Close buffer" }
+  maps.n["<leader>C"] = { function() astronvim.close_buf(0, true) end, desc = "Force close buffer" }
+  maps.n["<S-l>"] = { function() astronvim.nav_buf(vim.v.count > 0 and vim.v.count or 1) end, desc = "Next buffer" }
+  maps.n["<S-h>"] =
+    { function() astronvim.nav_buf(-(vim.v.count > 0 and vim.v.count or 1)) end, desc = "Previous buffer" }
+  maps.n[">b"] =
+    { function() astronvim.move_buf(vim.v.count > 0 and vim.v.count or 1) end, desc = "Move buffer tab right" }
+  maps.n["<b"] =
+    { function() astronvim.move_buf(-(vim.v.count > 0 and vim.v.count or 1)) end, desc = "Move buffer tab left" }
+
+  maps.n["<leader>bb"] = {
+    function()
+      astronvim.status.heirline.buffer_picker(function(bufnr) vim.api.nvim_win_set_buf(0, bufnr) end)
+    end,
+    desc = "Select buffer from tabline",
+  }
+  maps.n["<leader>bd"] = {
+    function()
+      astronvim.status.heirline.buffer_picker(function(bufnr) astronvim.close_buf(bufnr) end)
+    end,
+    desc = "Delete buffer from tabline",
+  }
+  maps.n["<leader>b\\"] = {
+    function()
+      astronvim.status.heirline.buffer_picker(function(bufnr)
+        vim.cmd.split()
+        vim.api.nvim_win_set_buf(0, bufnr)
+      end)
+    end,
+    desc = "Horizontal split buffer from tabline",
+  }
+  maps.n["<leader>b|"] = {
+    function()
+      astronvim.status.heirline.buffer_picker(function(bufnr)
+        vim.cmd.vsplit()
+        vim.api.nvim_win_set_buf(0, bufnr)
+      end)
+    end,
+    desc = "Vertical split buffer from tabline",
+  }
+else -- TODO v3: remove this else block
+  -- Bufdelete
+  if is_available "bufdelete.nvim" then
+    maps.n["<leader>c"] = { function() require("bufdelete").bufdelete(0, false) end, desc = "Close buffer" }
+    maps.n["<leader>C"] = { function() require("bufdelete").bufdelete(0, true) end, desc = "Force close buffer" }
+  else
+    maps.n["<leader>c"] = { "<cmd>bdelete<cr>", desc = "Close buffer" }
+    maps.n["<leader>C"] = { "<cmd>bdelete!<cr>", desc = "Force close buffer" }
+  end
+
+  -- Navigate buffers
+  if is_available "bufferline.nvim" then
+    maps.n["<S-l>"] = { "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer tab" }
+    maps.n["<S-h>"] = { "<cmd>BufferLineCyclePrev<cr>", desc = "Previous buffer tab" }
+    maps.n[">b"] = { "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer tab right" }
+    maps.n["<b"] = { "<cmd>BufferLineMovePrev<cr>", desc = "Move buffer tab left" }
+  else
+    maps.n["<S-l>"] = { "<cmd>bnext<cr>", desc = "Next buffer" }
+    maps.n["<S-h>"] = { "<cmd>bprevious<cr>", desc = "Previous buffer" }
+  end
 end
 
--- Navigate buffers
-if is_available "bufferline.nvim" then
-  maps.n["<S-l>"] = { "<cmd>BufferLineCycleNext<cr>", desc = "Next buffer tab" }
-  maps.n["<S-h>"] = { "<cmd>BufferLineCyclePrev<cr>", desc = "Previous buffer tab" }
-  maps.n[">b"] = { "<cmd>BufferLineMoveNext<cr>", desc = "Move buffer tab right" }
-  maps.n["<b"] = { "<cmd>BufferLineMovePrev<cr>", desc = "Move buffer tab left" }
-else
-  maps.n["<S-l>"] = { "<cmd>bnext<cr>", desc = "Next buffer" }
-  maps.n["<S-h>"] = { "<cmd>bprevious<cr>", desc = "Previous buffer" }
-end
+-- Navigate tabs
+maps.n["]t"] = { function() vim.cmd.tabnext() end, desc = "Next tab" }
+maps.n["[t"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
 
 -- Comment
 if is_available "Comment.nvim" then
@@ -64,15 +112,15 @@ end
 
 -- GitSigns
 if is_available "gitsigns.nvim" then
-  maps.n["<leader>gj"] = { function() require("gitsigns").next_hunk() end, desc = "Next git hunk" }
-  maps.n["<leader>gk"] = { function() require("gitsigns").prev_hunk() end, desc = "Previous git hunk" }
-  maps.n["<leader>gl"] = { function() require("gitsigns").blame_line() end, desc = "View git blame" }
-  maps.n["<leader>gp"] = { function() require("gitsigns").preview_hunk() end, desc = "Preview git hunk" }
-  maps.n["<leader>gh"] = { function() require("gitsigns").reset_hunk() end, desc = "Reset git hunk" }
-  maps.n["<leader>gr"] = { function() require("gitsigns").reset_buffer() end, desc = "Reset git buffer" }
-  maps.n["<leader>gs"] = { function() require("gitsigns").stage_hunk() end, desc = "Stage git hunk" }
-  maps.n["<leader>gu"] = { function() require("gitsigns").undo_stage_hunk() end, desc = "Unstage git hunk" }
-  maps.n["<leader>gd"] = { function() require("gitsigns").diffthis() end, desc = "View git diff" }
+  maps.n["<leader>gj"] = { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
+  maps.n["<leader>gk"] = { function() require("gitsigns").prev_hunk() end, desc = "Previous Git hunk" }
+  maps.n["<leader>gl"] = { function() require("gitsigns").blame_line() end, desc = "View Git blame" }
+  maps.n["<leader>gp"] = { function() require("gitsigns").preview_hunk() end, desc = "Preview Git hunk" }
+  maps.n["<leader>gh"] = { function() require("gitsigns").reset_hunk() end, desc = "Reset Git hunk" }
+  maps.n["<leader>gr"] = { function() require("gitsigns").reset_buffer() end, desc = "Reset Git buffer" }
+  maps.n["<leader>gs"] = { function() require("gitsigns").stage_hunk() end, desc = "Stage Git hunk" }
+  maps.n["<leader>gu"] = { function() require("gitsigns").undo_stage_hunk() end, desc = "Unstage Git hunk" }
+  maps.n["<leader>gd"] = { function() require("gitsigns").diffthis() end, desc = "View Git diff" }
 end
 
 -- NeoTree
@@ -96,9 +144,6 @@ if is_available "mason.nvim" then
   maps.n["<leader>pI"] = { "<cmd>Mason<cr>", desc = "Mason Installer" }
   maps.n["<leader>pU"] = { "<cmd>MasonUpdateAll<cr>", desc = "Mason Update" }
 end
-
--- LSP Installer
-if is_available "mason-lspconfig.nvim" then maps.n["<leader>li"] = { "<cmd>LspInfo<cr>", desc = "LSP information" } end
 
 -- Smart Splits
 if is_available "smart-splits.nvim" then
