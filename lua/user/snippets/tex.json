@@ -782,10 +782,10 @@
 			"\\det $0"
 		]
 	},
-	"mathrm": {
-		"prefix": "rm",
+	"perpendicular": {
+		"prefix": "perp",
 		"body": [
-			"\\mathrm{$1} $0"
+			"\\perp $0"
 		]
 	},
 	"mathrm": {
