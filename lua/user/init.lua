@@ -3,7 +3,7 @@ local config = {
   -- Configure AstroNvim updates
   updater = {
     remote = "origin", -- remote to use
-    channel = "nightly", -- "stable" or "nightly"
+    channel = "stable", -- "stable" or "nightly"
     version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
     branch = "main", -- branch name (NIGHTLY ONLY)
     commit = nil, -- commit hash (NIGHTLY ONLY)
@@ -42,6 +42,7 @@ local config = {
       mapleader = " ", -- sets vim.g.mapleader
       -- vimtex_view_general_viewer = "xournalpp",
       tex_flavor = "latex",
+      spelllang = "sv",
     },
   },
 
@@ -100,6 +101,7 @@ local config = {
 
       opts.mapping["<Tab>"] = function(fallback)
         if cmp.visible() then
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-g>u", true, false, true), "n", true)
           cmp.confirm { select = true }
         else
           fallback()
