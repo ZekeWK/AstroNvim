@@ -37,6 +37,12 @@
 			"\\overbrace{${1:${TM_SELECTED_TEXT}}}_{$2} $0"
 		]
 	},
+	"bar": {
+		"prefix": "bar",
+		"body": [
+			"\\bar{${1:${TM_SELECTED_TEXT}}} $0"
+		]
+	},
 	"underset": {
 		"prefix": "underset",
 		"body": [
@@ -378,7 +384,7 @@
 	"lim": {
 		"prefix": "lim",
 		"body": [
-			"\\lim_{${1:h} \\rightarrow ${2:0} ${0:f(x)}"
+			"\\lim_{${1:h} \\rightarrow ${2:0}} ${3:f(x)} $0"
 		]
 	},
 	"sqrt": {
@@ -516,10 +522,16 @@
 			"\\vdots $0"
 		]
 	},
+	"abs": {
+		"prefix": ["|", "abs"],
+		"body": [
+			"|${1:${TM_SELECTED_TEXT}}| $0"
+		]
+	},
 	"len": {
 		"prefix": "len",
 		"body": [
-			"||${1:${TM_SELECTED_TEXT}}|| $0"
+			"|${1:${TM_SELECTED_TEXT}}| $0"
 		]
 	},
 	"cap": {
@@ -704,6 +716,18 @@
 		"prefix": "sigma",
 		"body": [
 			"\\sigma $0"
+		]
+	},
+	"epsilon": {
+		"prefix": "epsilon",
+		"body": [
+			"\\epsilon $0"
+		]
+	},
+	"rho": {
+		"prefix": "rho",
+		"body": [
+			"\\rho $0"
 		]
 	},
 	"iterator": {
